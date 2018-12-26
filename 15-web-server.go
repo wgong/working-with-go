@@ -42,3 +42,6 @@ func getRequest(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, file_requested)
 	return
 }
+
+// open browser at url=http://localhost:9999/
+// see files from current folder are listed

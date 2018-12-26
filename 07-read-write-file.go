@@ -43,13 +43,13 @@ func main() {
 
 	// write back to new file
 	// see documentation for which methods take what type
-	outfile := "output.txt"
+	outfile := "./extras/rabbit.out"
 	err = ioutil.WriteFile(outfile, content, 0644)
 	if err != nil {
 		log.Fatalln("Error writing file: ", err)
 	} else {
 		fmt.Println(">>>")
-		fmt.Println("Created: output.txt")
+		fmt.Printf("Created: %s\n", outfile)
 	}
 
 	// write to an existing file appending the content

@@ -42,11 +42,13 @@ func main() {
 	// split a string on a specific character or word
 	sentence := "I'm a sentence made up of words"
 	words := strings.Split(sentence, " ")
+	fmt.Println(len(words))
 	fmt.Printf("%v \n", words)
 
 	// If you were splitting on whitespace, using Fields is better because
 	// it will split on more than just the space, but all whitespace chars
 	fields := strings.Fields(sentence)
+	fmt.Println(len(fields))
 	fmt.Printf("%v \n", fields)
 
 }

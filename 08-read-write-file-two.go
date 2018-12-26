@@ -42,7 +42,7 @@ func main() {
 	}
 
 	// Write file by creating and then writing string by string
-	f, err := os.Create("output.txt")
+	f, err := os.Create("./extras/output2.txt")
 	if err != nil {
 		log.Fatalln("Error creating file: ", err)
 	}
@@ -54,6 +54,7 @@ func main() {
 			log.Fatalln("Error writing string: ", err)
 		}
 		fmt.Printf("Wrote %d bytes to file\n", bytes)
+		f.WriteString("\n\n")
 	}
 
 }

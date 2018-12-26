@@ -29,14 +29,15 @@ func main() {
 	// flag package provides parsing of command-line parameters
 	// this example we create global variables and then pass them in
 	// as pointers which BoolVar, StringVar and IntVar set as values
-	flag.StringVar(&str, "str", "default value", "text description")
-	flag.IntVar(&num, "num", 5, "text description")
+	flag.StringVar(&str, "str", "abc", "input text")
+	flag.IntVar(&num, "num", 5, "input number")
 	flag.BoolVar(&help, "help", false, "Display Help")
 	flag.Parse()
 
 	// check if help was called explicitly
 	if help {
 		fmt.Println(">> Display help screen")
+		fmt.Println(">> Usage:\n\t go run 11-command-line-args.go --str xyz --num 123 everything.else")
 		os.Exit(1)
 	}
 
@@ -66,11 +67,15 @@ func main() {
 // >> Number: 5
 // >> Last Item: command-line-args.go
 
+// $ go run command-line-args.go --help
+
 // $ go run command-line-args.go --str=Foo --num=8 filename
 // >> String: Foo
 // >> Number: 8
 // >> Last Item: filename
 // >> Flag Arg: filename
+
+// $ go run command-line-args.go -h
 
 // Try passing in invalid values, invalid flags and other tests
 // The flag package provides a lot to help build command-line programs

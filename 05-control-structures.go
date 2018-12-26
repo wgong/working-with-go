@@ -11,7 +11,9 @@ import "fmt"
 func main() {
 
 	// define an int variable
-	num := 1
+	num := 0
+
+	fmt.Println("num=", num)
 
 	// Go is not picky, conditionals don't require parentheses
 	if num > 3 {
@@ -24,7 +26,7 @@ func main() {
 	} else if num == 2 {
 		fmt.Println("Two")
 	} else {
-		fmt.Println("Many")
+		fmt.Println("Neither 1 nor 2")
 	}
 
 	// Switch statement takes conditionals and auto breaks

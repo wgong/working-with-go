@@ -13,17 +13,17 @@ import "fmt"
 
 func main() {
 
-	// initializes an empty array
-	var empty []int
+	// initializes an numbers array
+	var numbers []int
 
 	// initialize array with values
-	alphas := []string{"abc", "def", "ghi", "jkl"}
+	var alphas = []string{"abc", "def", "ghi", "jkl"}
 
 	// slices can not be modified, a new copy needs to be made
 	// here is a example that appends elements to a slice
-	empty = append(empty, 123)
-	empty = append(empty, 456)
-	fmt.Printf("%v \n", empty)
+	numbers = append(numbers, 123)
+	numbers = append(numbers, 456)
+	fmt.Printf("%v \n", numbers)
 
 	// append multiple values
 	alphas = append(alphas, "pqr", "stu")
@@ -36,6 +36,7 @@ func main() {
 	fmt.Println(alphas[1])
 
 	// retrieve a slice of a slice
+	// inclusive at start like python
 	alpha2 := alphas[1:3]
 	fmt.Println(alpha2)
 

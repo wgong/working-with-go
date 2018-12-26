@@ -6,21 +6,52 @@
  * See: https://github.com/go-sql-driver/mysql
  */
 
-/* You can create example table and data with the sql query below
+/*
+Install mysql pkg:
+$ go get github.com/go-sql-driver/mysql
 
-DROP TABLE IF EXISTS `posts`;
+You can create example table and data with the sql query below
 
-CREATE TABLE `posts` (
+$ mysql -u root -p
+mysql> create database godb;
+mysql> use godb;
+mysql> show tables;
+
+mysql> DROP TABLE IF EXISTS `posts`;
+
+mysql> CREATE TABLE `posts` (
   `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(30) NOT NULL,
   `body` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `posts` (`id`, `title`, `body`)
+mysql> show tables;
++----------------+
+| Tables_in_godb |
++----------------+
+| posts          |
++----------------+
+1 row in set (0.00 sec)
+
+
+mysql> INSERT INTO `posts` (`id`, `title`, `body`)
 VALUES
 	(1,'Hello World','The content of the hello world'),
-	(2,'Hello Second World','The content of the hello second world');
+	(2,'Hello Second World','The content of the hello second world'),
+	(3,'Welcome to Golang world','Golang is an interesting programming lang');
+
+mysql> select * from posts;
++----+-------------------------+-------------------------------------------+
+| id | title                   | body                                      |
++----+-------------------------+-------------------------------------------+
+|  1 | Hello World             | The content of the hello world            |
+|  2 | Hello Second World      | The content of the hello second world     |
+|  3 | Welcome to Golang world | Golang is an interesting programming lang |
++----+-------------------------+-------------------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> exit
 
 */
 
@@ -40,7 +71,7 @@ func dbConn() (db *sql.DB) {
 
 	dbDriver := "mysql"
 	dbUser := "root"
-	dbPass := "root"
+	dbPass := "MySQL12345"
 	dbName := "godb"
 	db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName)
 	if err != nil {
@@ -51,7 +82,7 @@ func dbConn() (db *sql.DB) {
 
 // Post is the key to connect database to the program
 type Post struct {
-	Id    int
+	ID    int
 	Title string
 	Body  string
 }
@@ -61,7 +92,7 @@ func getAll() {
 
 	db := dbConn()
 
-	selDB, err := db.Query("SELECT * FROM Posts ORDER BY id DESC")
+	selDB, err := db.Query("SELECT * FROM posts ORDER BY id DESC")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -79,7 +110,7 @@ func getAll() {
 			panic(err.Error())
 		}
 
-		post.Id = id
+		post.ID = id
 		post.Title = title
 		post.Body = body
 
@@ -94,11 +125,11 @@ func getAll() {
 }
 
 // getOne gets only one record from database
-func getOne(postId int) {
+func getOne(postID int) {
 
 	db := dbConn()
 
-	selDB, err := db.Query("SELECT * FROM Posts WHERE id=?", postId)
+	selDB, err := db.Query("SELECT * FROM Posts WHERE id=?", postID)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -115,7 +146,7 @@ func getOne(postId int) {
 			panic(err.Error())
 		}
 
-		post.Id = id
+		post.ID = id
 		post.Title = title
 		post.Body = body
 
@@ -134,7 +165,7 @@ func add() {
 
 	title := "Hello Second World"
 	body := "The content of the hello second world"
-	insertQuery, err := db.Prepare("INSERT INTO Posts(title, body) VALUES(?,?)")
+	insertQuery, err := db.Prepare("INSERT INTO posts(title, body) VALUES(?,?)")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -148,7 +179,7 @@ func add() {
 }
 
 // update helps you to update an existing record in the database
-func update(postId int) {
+func update(postID int) {
 
 	db := dbConn()
 
@@ -159,7 +190,7 @@ func update(postId int) {
 		panic(err.Error())
 	}
 
-	updateQuery.Exec(title, body, postId)
+	updateQuery.Exec(title, body, postID)
 
 	fmt.Println("UPDATED: Title: " + title + " | Body: " + body)
 
@@ -168,7 +199,7 @@ func update(postId int) {
 }
 
 // delete helps you to delete an existing record in the database
-func delete(postId int) {
+func delete(postID int) {
 
 	db := dbConn()
 
@@ -177,7 +208,7 @@ func delete(postId int) {
 		panic(err.Error())
 	}
 
-	deleteQuery.Exec(postId)
+	deleteQuery.Exec(postID)
 
 	fmt.Println("DELETED")
 

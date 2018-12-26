@@ -10,7 +10,13 @@
  * space and performance is a concern, see "encoding/gob" for another
  * format.
  *
- */
+ * How To Install and Secure Memcached on Ubuntu:
+    read https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-memcached-on-ubuntu-16-04
+
+		sudo apt update
+		sudo apt install memcached
+		sudo systemctl status memcached
+*/
 package main
 
 import (
@@ -30,6 +36,8 @@ func main() {
 
 	// connect to memcache server
 	mc := memcache.New("127.0.0.1:11211")
+
+	fmt.Println("mc.Get...")
 
 	// try to pull from memcache
 	fetchItem, err := mc.Get("dog")
@@ -51,7 +59,7 @@ func main() {
 	}
 
 	// create instance of object and set properties
-	spot := Dog{Name: "Spot", Color: "brown"}
+	spot := Dog{Name: "BullDog", Color: "brown"}
 
 	// create memcache item to store
 	setItem := memcache.Item{Key: "dog", Value: EncodeData(spot), Expiration: 300}
@@ -60,6 +68,8 @@ func main() {
 	if err != nil {
 		fmt.Println("Error setting memcache item", err)
 	}
+
+	// 1st run gives no result
 
 	// run twice
 }

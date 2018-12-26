@@ -23,6 +23,8 @@ func main() {
 	// get pointer of object
 	SpotPointer := &Spot
 
+	fmt.Println(Spot.Color)
+
 	// modify field through pointer
 	SpotPointer.Color = "black"
 

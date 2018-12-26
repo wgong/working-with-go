@@ -32,8 +32,8 @@ func Say(s string) string {
 // Also you do not need to include the variable in return statement
 // it will return the current value of the variable at return
 func Say2(s string) (phrase string) {
-	phrase = "Hello " + s
-	return
+	//phrase = "Hello " + s
+	return "Say2 " + s
 }
 
 // Function with multiple parameters and return values
@@ -59,6 +59,7 @@ func main() {
 
 	// call the Say function which returns a string
 	fmt.Println(Say("Gopher"))
+	fmt.Println(Say2("GoLang"))
 
 	// test function with multiple return value
 	q, r := Divide(11, 3)
@@ -66,4 +67,5 @@ func main() {
 	// this example uses Printf to format output, %v can be used for any type
 	fmt.Printf("Quotient: %v, Remainder %v \n", q, r)
 
+	fmt.Println(Divide2(121, 20))
 }

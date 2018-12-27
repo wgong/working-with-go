@@ -91,6 +91,7 @@ type Post struct {
 func getAll() {
 
 	db := dbConn()
+	defer db.Close()
 
 	selDB, err := db.Query("SELECT * FROM posts ORDER BY id DESC")
 	if err != nil {
@@ -121,15 +122,15 @@ func getAll() {
 		fmt.Println(post.Title)
 	}
 
-	defer db.Close()
 }
 
 // getOne gets only one record from database
 func getOne(postID int) {
 
 	db := dbConn()
+	defer db.Close()
 
-	selDB, err := db.Query("SELECT * FROM Posts WHERE id=?", postID)
+	selDB, err := db.Query("SELECT * FROM posts WHERE id=?", postID)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -155,16 +156,16 @@ func getOne(postID int) {
 	fmt.Println("Post Title	: " + post.Title)
 	fmt.Println("Post Body	: " + post.Body)
 
-	defer db.Close()
 }
 
 // add helps you to add new record to database
-func add() {
+func add(title string, body string) {
 
 	db := dbConn()
+	defer db.Close()
 
-	title := "Hello Second World"
-	body := "The content of the hello second world"
+	//title := "Hello Second World"
+	//body := "The content of the hello second world"
 	insertQuery, err := db.Prepare("INSERT INTO posts(title, body) VALUES(?,?)")
 	if err != nil {
 		panic(err.Error())
@@ -174,18 +175,17 @@ func add() {
 
 	fmt.Println("ADDED: Title: " + title + " | Body: " + body)
 
-	defer db.Close()
-
 }
 
 // update helps you to update an existing record in the database
-func update(postID int) {
+func update(postID int, title string, body string) {
 
 	db := dbConn()
+	defer db.Close()
 
-	title := "Hello 1 World"
-	body := "The content of the hello 1 world"
-	updateQuery, err := db.Prepare("UPDATE Posts SET title=?, body=? WHERE id=?")
+	//title := "Hello 1 World"
+	//body := "The content of the hello 1 world"
+	updateQuery, err := db.Prepare("UPDATE posts SET title=?, body=? WHERE id=?")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -194,16 +194,15 @@ func update(postID int) {
 
 	fmt.Println("UPDATED: Title: " + title + " | Body: " + body)
 
-	defer db.Close()
-
 }
 
 // delete helps you to delete an existing record in the database
 func delete(postID int) {
 
 	db := dbConn()
+	defer db.Close()
 
-	deleteQuery, err := db.Prepare("DELETE FROM Posts WHERE id=?")
+	deleteQuery, err := db.Prepare("DELETE FROM posts WHERE id=?")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -212,16 +211,26 @@ func delete(postID int) {
 
 	fmt.Println("DELETED")
 
-	defer db.Close()
-
 }
 
 func main() {
 
-	//add()
-	//update(1)
-	//delete(1)
-	//getOne(1)
+	fmt.Println("getAll ...")
 	getAll()
+
+	fmt.Println("add ...")
+	add("learn TerraTest", "very good tool for testing cloud infrastructure")
+	getAll()
+
+	fmt.Println("update(1) ...")
+	update(1, "learn go at exercism", "recommended by go tracker mentor John")
+	getAll()
+
+	fmt.Println("delete(2) ...")
+	delete(2)
+	getAll()
+
+	fmt.Println("getOne(3) ...")
+	getOne(3)
 
 }
